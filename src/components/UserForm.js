@@ -22,6 +22,7 @@ const UserForm = (props) =>{
     const handleSubmit = e =>{
         e.preventDefault();
         props.addOrEdit(values);
+        setValues({...initialStateValues})
     }
 
     return (
@@ -33,9 +34,10 @@ const UserForm = (props) =>{
                 <input 
                 type="text"
                 className="form-control" 
-                placeholder="https://someurl.com"
+                placeholder="https://Likedin.com"
                 name="url"
-                onChange={handleInputChange}/>
+                onChange={handleInputChange}
+                value={values.url}/>
             </div>
                 <br/>
             <div className="form-group input-group">
@@ -47,7 +49,8 @@ const UserForm = (props) =>{
                 className="form-control" 
                 placeholder="Ingrese el nombre"
                 name="nombre"
-                onChange={handleInputChange}/>
+                onChange={handleInputChange}
+                value={values.nombre}/>
             </div>
                 <br/>
             <div className="form-group input-group">
@@ -59,7 +62,8 @@ const UserForm = (props) =>{
                 className="form-control" 
                 placeholder="Ingrese el apellido"
                 name="apellido"
-                onChange={handleInputChange}/>
+                onChange={handleInputChange}
+                value={values.apellido}/>
             </div>
             <br/>
             <div className="form-group input-group">
@@ -71,7 +75,8 @@ const UserForm = (props) =>{
                 className="form-control" 
                 placeholder="Ingrese el telefono"
                 name="telefono"
-                onChange={handleInputChange}/>
+                onChange={handleInputChange}
+                value={values.telefono}/>
             </div>
             <br/>
             <div className="form-group input-group">
@@ -83,7 +88,8 @@ const UserForm = (props) =>{
                 className="form-control" 
                 placeholder="Ingrese la direccion"
                 name="direccion"
-                onChange={handleInputChange}/>
+                onChange={handleInputChange}
+                value={values.direccion}/>
             </div>
             <br/>
             <div className="form-group input-group">
@@ -95,12 +101,14 @@ const UserForm = (props) =>{
                 className="form-control" 
                 placeholder="Ingrese correo electronico"
                 name="email"
-                onChange={handleInputChange}/>
+                onChange={handleInputChange}
+                value={values.email}/>
             </div>
             <br/>
             <div className="form-group">
                 <textarea name="description" rows="3" className="form-control"
-                placeholder="Write a description" onChange={handleInputChange}>
+                placeholder="Write a description" onChange={handleInputChange}
+                value={values.description}>
                 </textarea>
             </div>
             <br/>
