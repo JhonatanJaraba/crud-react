@@ -1,7 +1,17 @@
 import React from "react";
+import UserForm from "./UserForm";
+import {db} from '../firebase';
 
 const Links = () =>{
-    return <h1>Links</h1>
-}
+
+    const addTask = (Object) =>{
+        db.collection('user').doc().set(Object);
+    }
+
+    return <div>
+        <UserForm addOrEdit={addTask}/>
+        <h1>Links</h1>
+    </div>
+};
 
 export default Links;

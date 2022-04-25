@@ -1,10 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 
-const UserForm = () =>{
+const UserForm = (props) =>{
+
+   const initialStateValues = {
+    url: '',
+    nombre: '',
+    apellido: '',
+    telefono: '',
+    direccion: '',
+    email: '',
+    description: ''
+   }
+
+   const [values, setValues] = useState(initialStateValues);
+
+   const handleInputChange = e =>{
+       const {name, value} = e.target;
+       setValues({...values, [name]: value});
+   }
 
     const handleSubmit = e =>{
         e.preventDefault();
-        console.log(e);
+        props.addOrEdit(values);
     }
 
     return (
@@ -13,65 +30,77 @@ const UserForm = () =>{
                 <div className="input-group-text bg-light">
                 <i className="material-icons">insert_link</i>
                 </div>
-                <input type="text"
+                <input 
+                type="text"
                 className="form-control" 
                 placeholder="https://someurl.com"
-                name="url"/>
+                name="url"
+                onChange={handleInputChange}/>
             </div>
                 <br/>
             <div className="form-group input-group">
                 <div className="input-group-text bg-light">
                 <i className="material-icons">assignment_ind</i>
                 </div>
-                <input type="text"
+                <input 
+                type="text"
                 className="form-control" 
                 placeholder="Ingrese el nombre"
-                name="nombre"/>
+                name="nombre"
+                onChange={handleInputChange}/>
             </div>
                 <br/>
             <div className="form-group input-group">
                 <div className="input-group-text bg-light">
                 <i className="material-icons">create</i>
                 </div>
-                <input type="text"
+                <input 
+                type="text"
                 className="form-control" 
                 placeholder="Ingrese el apellido"
-                name="apellido"/>
+                name="apellido"
+                onChange={handleInputChange}/>
             </div>
             <br/>
             <div className="form-group input-group">
                 <div className="input-group-text bg-light">
                 <i className="material-icons">call_end</i>
                 </div>
-                <input type="text"
+                <input 
+                type="text"
                 className="form-control" 
                 placeholder="Ingrese el telefono"
-                name="telefono"/>
+                name="telefono"
+                onChange={handleInputChange}/>
             </div>
             <br/>
             <div className="form-group input-group">
                 <div className="input-group-text bg-light">
                 <i className="material-icons">keyboard_return</i>
                 </div>
-                <input type="text"
+                <input 
+                type="text"
                 className="form-control" 
                 placeholder="Ingrese la direccion"
-                name="direccion"/>
+                name="direccion"
+                onChange={handleInputChange}/>
             </div>
             <br/>
             <div className="form-group input-group">
                 <div className="input-group-text bg-light">
                 <i className="material-icons">email</i>
                 </div>
-                <input type="email"
+                <input 
+                type="email"
                 className="form-control" 
                 placeholder="Ingrese correo electronico"
-                name="email"/>
+                name="email"
+                onChange={handleInputChange}/>
             </div>
             <br/>
             <div className="form-group">
                 <textarea name="description" rows="3" className="form-control"
-                placeholder="Write a description">
+                placeholder="Write a description" onChange={handleInputChange}>
                 </textarea>
             </div>
             <br/>
