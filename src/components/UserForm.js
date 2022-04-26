@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import {firebase} from '../firebase';
 
 const UserForm = (props) =>{
 
@@ -21,9 +22,24 @@ const UserForm = (props) =>{
 
     const handleSubmit = e =>{
         e.preventDefault();
+        
         props.addOrEdit(values);
         setValues({...initialStateValues})
     }
+
+    const getLinkById = async (id) => {
+        const db = firebase.firestore();
+        const doc = await db.collection('user').doc(id).get();
+        setValues({...doc.data()})
+    }
+
+    useEffect(() => {
+        if(props.currentId === ''){
+            setValues({...initialStateValues});
+        }else{
+            getLinkById(props.currentId);
+        }
+    }, [props.currentId]);
 
     return (
         <form className="card card-body" onSubmit={handleSubmit}>
@@ -113,7 +129,7 @@ const UserForm = (props) =>{
             </div>
             <br/>
             <button className="btn btn-primary btn-block">
-                save
+                {props.currentId === '' ? 'Save':'Update'}
             </button>
         </form>
     )
