@@ -1,0 +1,1 @@
+URL AWS AMPLIFY = https://main.d5fqb4c08eb1i.amplifyapp.com/
