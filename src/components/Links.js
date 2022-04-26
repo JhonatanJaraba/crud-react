@@ -1,53 +1,74 @@
 import React, {useEffect, useState} from "react";
 import UserForm from "./UserForm";
-import {db} from '../firebase';
+import {firebase} from '../firebase';
 
 const Links = () =>{
 
-    const {user, setUser} = useState([]);
+    const [user, setUser] = useState([]);
 
     const addTask = async (Object) =>{
-       await db.collection('user').doc().set(Object);
-       console.log("Se guardo");
+       const db = firebase.firestore()
+       await db.collection('user').add(Object);
     };
 
     const getUser = async () => {
-        db.collection('user').onSnapshot(
-          (querySnapshot) => {
-            const docs = [];
+        const db1 = firebase.firestore()
+          db1.collection('user').onSnapshot((querySnapshot) => {
+              const docs = [];
             querySnapshot.forEach(element => {
                 docs.push({...element.data(), id:element.id});
-            });
+            });  
+            console.log(docs);
             setUser(docs);
-      });
-    }
-
-    const onDeleteUser = id => {
-
-    }
+        });
+    };
+/*
+    const onDeleteUser = async (id) => {
+        if(window.confirm('are you sure you want to delete this user?')) {
+         await db.collection('user').doc(id).delete();
+        }
+    };*/
 
     useEffect(() => {
-        getUser();
+      getUser();
     }, []);
 
     return (
-    <div>
+    <div className="d-flex justify-content-between">
         <div className="col-md-4 p-2">
             <UserForm addOrEdit={addTask}/>
         </div>
         <div className="col-md-8 p-2">
-        {user.map(user => (
-                <div className="card mb-1" key={user.id}>
-                    <div className="card-body">
-                        <div className="d-flex justify-content-between">
-                        <h4>{user.nombre} - {user.apellido}</h4>
-                        <i className="material-icons text-danger" onClick={() => onDeleteUser(user.id)}>close</i>
-                        </div>
-                        <p>{user.description}</p>
-                        <a href={user.url} target="blank">Ir a linkedin</a>
-                    </div>
+            
+                <div className="card mb-1">
+                    <table className="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                            <th scope="col">Ir a likedin</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {user.map(users => ( 
+                            <tr key={users.id}>
+                            <td>
+                                <i className="material-icons text-danger">
+                                    close
+                                </i>
+                            </td>
+                            <td>{users.nombre}</td>
+                            <td>{users.description}</td>
+                            <td>{users.telefono}</td>
+                            <td><a href={users.url} target="blank">Ir a Likedin</a></td>
+                            </tr>
+                        ))}
+                        </tbody>
+                        </table>
                 </div>
-            ))}
+           
         </div>
     </div>);
 };
